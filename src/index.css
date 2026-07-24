@@ -1,0 +1,50 @@
+@import "tailwindcss";
+@media (max-width: 768px) {
+header .max-w-\[1400px\] {
+flex-direction: column;
+gap: 12px;
+  }
+header h1 {
+font-size: 24px;
+  }
+header .flex-1 {
+width: 100%;
+max-width: 100%;
+  }
+header .ml-auto {
+margin-left: 0;
+justify-content: center;
+  }
+nav .flex {
+overflow-x: auto;
+ gap: 12px;
+padding-bottom: 8px;
+  }
+section {
+    max-width: 100%;
+  }
+.grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+.grid {
+    gap: 12px;
+}
+.fixed.right-4 {
+    right: 5px;
+  }
+.fixed.right-4 button {
+    width: 52px;
+    height: 52px;
+}
+}
+@media (max-width: 480px) {
+.grid-cols-4 {
+    grid-template-columns: repeat(1, 1fr);
+}
+input {
+font-size: 12px;
+}
+nav button:not(:first-child) {
+    font-size: 12px;
+}
+}
