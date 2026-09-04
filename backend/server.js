@@ -1,22 +1,9 @@
 const express = require("express");
 const cors = require("cors");
-
 const app = express();
-
-const PORT = 5000;
-
-// ======================================================
-// MIDDLEWARE
-// ======================================================
-
+const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cors());
-
-
-// ======================================================
-// PRODUCTS
-// ======================================================
-
 const products = [
   {
     id: 1,
@@ -435,7 +422,6 @@ const products = [
     welcomeDeal: false,
     image: "https://images.unsplash.com/photo-1601593346740-925612772716?auto=format&fit=crop&w=400&q=80"
   },
-
   {
     id: 33,
     category: "Computers",
@@ -488,7 +474,6 @@ const products = [
     welcomeDeal: true,
     image: "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=400&q=80"
   },
-
   {
     id: 37,
     category: "Gaming",
@@ -647,7 +632,6 @@ const products = [
     welcomeDeal: false,
     image: "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=400&q=80"
   },
-
   {
     id: 49,
     category: "Home",
@@ -700,7 +684,6 @@ const products = [
     welcomeDeal: true,
     image: "https://images.unsplash.com/photo-1556911220-bff31c0b1b16?auto=format&fit=crop&w=400&q=80"
   },
-
   {
     id: 53,
     category: "Kitchen",
@@ -754,7 +737,6 @@ const products = [
     welcomeDeal: false,
     image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=400&q=80"
   },
-
   {
     id: 57,
     category: "Automotive",
@@ -808,87 +790,48 @@ const products = [
     image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=400&q=80"
   }
 ];
-// ======================================================
-// MARKETPLACE SECTIONS
-// ======================================================
-
-// Flash Deals
 const flashDeals = products.filter(
   (product) => product.discount && Number(product.rating) >= 4.8
 );
-
-// Choice
 const choiceProducts = products.filter(
   (product) => product.welcomeDeal === true
 );
-
-// Super Deals
 const superDeals = products.filter(
   (product) => product.discount
 );
-
-// Trending
 const trendingProducts = products.filter(
   (product) => Number(product.rating) >= 4.9
 );
-
-// New Arrivals
 const newArrivals = products.slice(-12);
-
-// More to Love
 const moreToLove = products;
-
-// ======================================================
-// DATA
-// ======================================================
-
 let orders = [];
 let users = [];
-
-
-// ======================================================
-// HOME
-// ======================================================
-
 app.get("/", (req, res) => {
   res.send("AliExpress Backend is running perfectly!");
 });
-
-
-// ======================================================
-// AUTHENTICATION
-// ======================================================
-
-// Register user
 app.post("/api/auth/register", (req, res) => {
   const { name, email, password } = req.body;
-
   if (!name || !email || !password) {
     return res.status(400).json({
       message: "Please provide name, email and password"
     });
   }
-
   const existingUser = users.find(
     (user) => user.email === email
   );
-
   if (existingUser) {
     return res.status(400).json({
       message: "Email already registered"
     });
   }
-
   const newUser = {
     id: users.length + 1,
     name,
     email,
     password
   };
-
-  users.push(newUser);
-
-  res.status(201).json({
+users.push(newUser);
+ res.status(201).json({
     message: "User registered successfully",
     user: {
       id: newUser.id,
@@ -897,112 +840,68 @@ app.post("/api/auth/register", (req, res) => {
     }
   });
 });
-
-
-// Login user
 app.post("/api/auth/login", (req, res) => {
   const { email, password } = req.body;
-
   const user = users.find(
     (user) =>
       user.email === email &&
       user.password === password
   );
-
   if (!user) {
     return res.status(401).json({
       message: "Invalid email or password"
     });
   }
-
   res.json({
     message: "Login successful",
     user: {
-      id: user.id,
-      name: user.name,
-      email: user.email
-    }
+    id: user.id,
+    name: user.name,
+    email: user.email
+  }
   });
 });
-
-
-// ======================================================
-// PRODUCTS
-// ======================================================
-
-// Get all products
 app.get("/api/products", (req, res) => {
   res.json(products);
 });
-
-// ======================================================
-// MARKETPLACE SECTION ROUTES
-// ======================================================
-
-// Flash Deals
 app.get("/api/products/flash-deals", (req, res) => {
   res.json(flashDeals);
 });
-
-// Choice
 app.get("/api/products/choice", (req, res) => {
   res.json(choiceProducts);
 });
-
-// Super Deals
 app.get("/api/products/super-deals", (req, res) => {
   res.json(superDeals);
 });
-
-// Trending
 app.get("/api/products/trending", (req, res) => {
   res.json(trendingProducts);
 });
-
-// New Arrivals
 app.get("/api/products/new-arrivals", (req, res) => {
   res.json(newArrivals);
 });
-
-// More to Love
 app.get("/api/products/more-to-love", (req, res) => {
   res.json(moreToLove);
 });
-// Search products
 app.get("/api/products/search/:keyword", (req, res) => {
-  const keyword = req.params.keyword.toLowerCase();
-
-  const results = products.filter(
+const keyword = req.params.keyword.toLowerCase();
+const results = products.filter(
     (product) =>
       product.name.toLowerCase().includes(keyword) ||
       product.category.toLowerCase().includes(keyword)
   );
-
   res.json(results);
 });
-
-
-// Get one product
 app.get("/api/products/:id", (req, res) => {
   const product = products.find(
     (product) => product.id === Number(req.params.id)
   );
-
   if (!product) {
     return res.status(404).json({
       message: "Product not found"
     });
   }
-
   res.json(product);
 });
-
-
-// ======================================================
-// ORDERS
-// ======================================================
-
-// Create a new order
 app.post("/api/orders", (req, res) => {
   const {
     customer,
@@ -1010,87 +909,64 @@ app.post("/api/orders", (req, res) => {
     items,
     total
   } = req.body;
-
   if (
     !customer ||
     !paymentMethod ||
     !items ||
     items.length === 0
   ) {
-    return res.status(400).json({
-      message: "Invalid order data"
+  return res.status(400).json({
+   message: "Invalid order data"
     });
   }
-
-  const newOrder = {
-    id: orders.length + 1,
-    customer,
-    paymentMethod,
-    items,
-    total,
-    status: "Pending",
-    createdAt: new Date().toISOString()
+const newOrder = {
+  id: orders.length + 1,
+  customer,
+  paymentMethod,
+  items,
+  total,
+  status: "Pending",
+  createdAt: new Date().toISOString()
   };
-
-  orders.push(newOrder);
-
-  console.log("NEW ORDER:", newOrder);
-
-  res.status(201).json({
-    message: "Order created successfully",
-    order: newOrder
+orders.push(newOrder);
+console.log("NEW ORDER:", newOrder);
+res.status(201).json({
+  message: "Order created successfully",
+  order: newOrder
   });
 });
-
-
-// Get all orders
 app.get("/api/orders", (req, res) => {
   res.json(orders);
 });
-
-
-// Get one order
 app.get("/api/orders/:id", (req, res) => {
   const order = orders.find(
     (order) => order.id === Number(req.params.id)
   );
-
   if (!order) {
-    return res.status(404).json({
-      message: "Order not found"
+  return res.status(404).json({
+    message: "Order not found"
     });
   }
-
   res.json(order);
 });
-
-
-// Get order status
 app.get("/api/orders/:id/status", (req, res) => {
   const orderId = Number(req.params.id);
-
   const order = orders.find(
     (order) => order.id === orderId
   );
-
   if (!order) {
     return res.status(404).json({
       message: "Order not found"
     });
   }
-
-  res.json({
-    orderId: order.id,
-    status: order.status
+res.json({
+  orderId: order.id,
+  status: order.status
   });
 });
-
-
-// Update order status
 app.patch("/api/orders/:id/status", (req, res) => {
   const orderId = Number(req.params.id);
   const { status } = req.body;
-
   const allowedStatuses = [
     "Pending",
     "Confirmed",
@@ -1098,40 +974,28 @@ app.patch("/api/orders/:id/status", (req, res) => {
     "Delivered",
     "Cancelled"
   ];
-
   if (!allowedStatuses.includes(status)) {
-    return res.status(400).json({
-      message: "Invalid order status"
+  return res.status(400).json({
+  message: "Invalid order status"
     });
   }
-
   const order = orders.find(
-    (order) => order.id === orderId
+  (order) => order.id === orderId
   );
-
   if (!order) {
-    return res.status(404).json({
-      message: "Order not found"
+   return res.status(404).json({
+  message: "Order not found"
     });
   }
-
   order.status = status;
-
   console.log("ORDER STATUS UPDATED:", order);
-
-  res.json({
-    message: "Order status updated successfully",
-    order
+res.json({
+message: "Order status updated successfully",
+order
   });
 });
-
-
-// ======================================================
-// START SERVER
-// ======================================================
-
-app.listen(PORT, () => {
-  console.log(
-    `Server running on http://localhost:${PORT}`
-  );
+app.listen(PORT, "0.0.0.0", () => {
+console.log(
+`Server running on http://localhost:${PORT}`
+);
 });
