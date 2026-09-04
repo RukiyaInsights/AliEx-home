@@ -6,7 +6,7 @@ function SuperDeals({
 }) {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/api/products/super-deals")
+    fetch("https://aliex-home-back.onrender/api/products/super-deals")
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) =>

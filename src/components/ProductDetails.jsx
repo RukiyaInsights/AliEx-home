@@ -12,7 +12,7 @@ function ProductDetails({ productId, onBack, onAddToCart }) {
     }
     setLoading(true);
     setError("");
-    fetch(`http://localhost:5000/api/products/${productId}`)
+    fetch(`https://aliex-home-back.onrender/api/products/${productId}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Product not found");

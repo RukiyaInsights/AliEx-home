@@ -263,7 +263,7 @@ const [showMobileMenu, setShowMobileMenu] = useState(false);
         onClick={() =>
           openPage({
             title: "More to Love",
-            endpoint: "all",
+            endpoint: "more-to-love",
           })
         }
         className="px-3 py-2 rounded-md hover:bg-gray-100 hover:text-red-600 transition">
@@ -362,7 +362,7 @@ const [showMobileMenu, setShowMobileMenu] = useState(false);
           onClick={() =>
             openPage({
               title: "More to Love",
-              endpoint: "all",
+              endpoint: "more-to-love",
             })
           }
           className="text-left px-4 py-3 rounded-md hover:bg-gray-100"

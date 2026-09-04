@@ -8,7 +8,7 @@ function OrderTracking({ orderId, onBack }) {
     const getOrderStatus = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/orders/${orderId}/status`
+          `https://aliex-home-back.onrender/api/orders/${orderId}/status`
         );
         const data = await response.json();
         if (!response.ok) {

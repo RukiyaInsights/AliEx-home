@@ -24,6 +24,9 @@ import MarketplacePage from "./components/MarketplacePage";
 import { FiTruck } from "react-icons/fi";
 function App() {
   const [searchResults, setSearchResults] = useState(null);
+  const handleShopNow = () => {
+  setSearchResults(null);
+};
   const handleSearchResults = (results) => {
     setSearchResults(results);
     setActivePage(null);
@@ -237,7 +240,15 @@ setCartItems((currentItems) =>
             </div>
           </div>
           <Deals />
-          <Hero />
+          <Hero onShopNow={() => {
+  setSearchResults(null);
+  setSelectedProductId(null);
+  setSelectedCategory(null);
+  setActivePage({
+    title: "More to Love",
+    endpoint: "more-to-love",
+  });
+}} />
           <Categories />
   <FlashDeals
       onProductClick={handleProductClick}

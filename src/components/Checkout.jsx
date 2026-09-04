@@ -45,8 +45,7 @@ function Checkout({ cartItems, onBack, onOrderPlaced }) {
       total,
     };
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/orders",
+      const response = await fetch("https://aliex-home-back.onrender.com/api/orders",
         {
           method: "POST",
           headers: {

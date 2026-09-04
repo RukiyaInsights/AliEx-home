@@ -24,11 +24,15 @@ function ProductCard({ image, name, oldPrice, price, discount }) {
     </div>
   );
 }
-function Hero() {
+function Hero({ onShopNow }) {
   const handleShopNow = () => {
-    document
-      .getElementById("products-section")
-      ?.scrollIntoView({ behavior: "smooth" });
+    onShopNow?.();
+
+    setTimeout(() => {
+      document
+        .getElementById("products-section")
+        ?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
   };
   return (
     <section className="w-full">

@@ -15,7 +15,7 @@ function OrderConfirmation({
     const getOrderStatus = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/orders/${order.id}/status`
+          `https://aliex-home-back.onrender/api/orders/${order.id}/status`
         );
         if (!response.ok) {
           throw new Error("Failed to get order status");

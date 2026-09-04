@@ -15,7 +15,7 @@ function Products({ searchResults=null, onProductClick, onAddToCart }) {
       try {
         setLoading(true);
         const response = await fetch(
-          "http://localhost:5000/api/products"
+          "https://aliex-home-back.onrender.com/api/products"
         );
         if (!response.ok) {
           throw new Error("Failed to load products");

@@ -17,7 +17,7 @@ function Register({ onRegister, onBack }) {
     setLoading(true);
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/register",
+        "https://aliex-home-back.onrender/api/auth/register",
         {
           method: "POST",
           headers: {

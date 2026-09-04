@@ -6,7 +6,7 @@ function NewArrivals({
 }) {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/api/products/new-arrivals")
+    fetch("https://aliex-home-back.onrender.com/api/products/new-arrivals")
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) =>

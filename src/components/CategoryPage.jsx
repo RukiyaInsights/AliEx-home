@@ -10,7 +10,7 @@ function CategoryPage({
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:5000/api/products")
+    fetch("https://aliex-home-back.onrender.com/api/products")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to load products");

@@ -6,7 +6,7 @@ function Trending({
 }) {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/api/products/trending")
+    fetch("https://aliex-home-back.onrender/api/products/trending")
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) =>

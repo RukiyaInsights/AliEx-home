@@ -6,7 +6,7 @@ function ChoiceProducts({
 }) {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/api/products/choice")
+    fetch("https://aliex-home-back.onrender.com/api/products")
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) =>
