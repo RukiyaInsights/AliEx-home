@@ -10,7 +10,7 @@ function SearchBar({ setSearchResults }) {
     console.log("Searching for:", search);
     try {
       const response = await fetch(
-        `https://aliex-home-back.onrender/api/products/search/${encodeURIComponent(
+        `https://aliex-home-back.onrender.com/api/products/search/${encodeURIComponent(
           search
         )}`
       );
